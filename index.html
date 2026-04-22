@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>艺启云·萌盒美育平台 | 非遗传承·美育未来</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+            background: #fef7f0;
+            color: #2e241f;
+            line-height: 1.5;
+        }
+
+        /* 响应式容器 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 头部导航 */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(2px);
+        }
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #d48c3c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span {
+            background: #f0e2d4;
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #8b5a2b;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #4a3729;
+            font-weight: 500;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            border-bottom-color: #d48c3c;
+            color: #d48c3c;
+        }
+
+        /* 主 banner */
+        .hero {
+            background: linear-gradient(135deg, #f7e5d4 0%, #f9efdf 100%);
+            border-radius: 32px;
+            margin: 24px 0 32px;
+            padding: 40px 24px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            color: #5a3e2b;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            margin-top: 12px;
+            color: #7d5f44;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 四大非遗产品区域 */
+        .section-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 48px 0 24px;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #d48c3c;
+            margin: 8px auto 0;
+            border-radius: 4px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+            margin-bottom: 48px;
+        }
+
+        /* 产品卡片 */
+        .product-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .product-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f2e3d5;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 12px;
+        }
+        .product-tag {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .product-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #4e3622;
+        }
+        .product-desc {
+            color: #6b4e34;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .activities {
+            background: #fef5ec;
+            border-radius: 24px;
+            padding: 12px 16px;
+            margin: 8px 0 16px;
+        }
+        .activities h4 {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: #c97e2a;
+        }
+        .activity-item {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .activity-icon {
+            font-size: 1.1rem;
+        }
+        .activity-text {
+            color: #3e2a1f;
+        }
+        .btn-sm {
+            background: #fff0e0;
+            border: 1px solid #e2cbb6;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            align-self: flex-start;
+            margin-top: 8px;
+        }
+        .btn-sm:hover {
+            background: #d48c3c;
+            color: white;
+            border-color: #d48c3c;
+        }
+
+        /* 功能模块区 (教学视频/教案资源/云端相册/轻量化AR) */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 28px;
+            padding: 24px 16px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid #f3e5d8;
+            transition: all 0.2s;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .feature-card p {
+            font-size: 0.85rem;
+            color: #7b5f44;
+        }
+        .feature-btn {
+            margin-top: 16px;
+            background: none;
+            border: 1px solid #d48c3c;
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* 云端相册画廊简易 */
+        .gallery-preview {
+            background: #faf3ea;
+            border-radius: 32px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .gallery-grid {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 8px 0;
+        }
+        .gallery-grid img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 20px;
+            background: #e9d9cb;
+        }
+
+        /* 底部 */
+        footer {
+            background: #e8d9cd;
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #5c4533;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .product-title {
+                font-size: 1.4rem;
+            }
+            .products-grid {
+                gap: 20px;
+            }
+        }
+
+        /* 弹窗样式 (模拟AR/视频) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            max-width: 90%;
+            width: 560px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 40px;
+            padding: 24px;
+            text-align: center;
+        }
+        .close-modal {
+            margin-top: 20px;
+            background: #d48c3c;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+        }
+        /* pdf链接样式 */
+        .pdf-download-link {
+            display: inline-block;
+            margin-left: 10px;
+            background: #f1e3d6;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            text-decoration: none;
+            color: #b45f2a;
+            font-weight: 500;
+            transition: 0.2s;
+            border: 1px solid #e5cfbc;
+        }
+        .pdf-download-link:hover {
+            background: #d48c3c;
+            color: white;
+            border-color: #d48c3c;
+        }
+        .resource-list-item {
+            margin-bottom: 12px;
+            text-align: left;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .resource-text {
+            flex: 1;
+        }
+        hr {
+            margin: 12px 0;
+            border-color: #f0e2d4;
+        }
+        .pdf-note {
+            background: #fef0e4;
+            padding: 8px 12px;
+            border-radius: 28px;
+            font-size: 0.75rem;
+            margin-bottom: 16px;
+            color: #a56529;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-container">
+        <div class="logo">🎨 艺启云 <span>萌盒美育</span></div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" data-nav="home">首页</a></li>
+            <li><a href="#" data-nav="video">教学视频</a></li>
+            <li><a href="#" data-nav="resource">教案资源</a></li>
+            <li><a href="#" data-nav="album">云端相册</a></li>
+            <li><a href="#" data-nav="ar">轻量化AR</a></li>
+        </ul>
+    </div>
+</div>
+
+<main id="app">
+    <div class="container">
+        <!-- 英雄区 -->
+        <div class="hero">
+            <h1>指尖上的非遗 · 美育润童心</h1>
+            <p>刻纸｜扎染｜非遗香珠｜皮影 —— 四大传统技艺，配套完整教学资源与互动体验</p>
+        </div>
+
+        <!-- 四大非遗产品展示区域 (每个区域含三个活动) -->
+        <div class="section-title">🏮 非遗工坊 · 四大技艺</div>
+        <div class="products-grid" id="productsGrid">
+            <!-- 产品1: 刻纸 -->
+            <div class="product-card">
+                <div class="product-img" style="background-image: linear-gradient(120deg, #f6d4b1, #f4cda9), url('kezhi.jpg'); background-blend-mode: overlay;">
+                    <span class="product-tag">✂️ 镂空艺术</span>
+                </div>
+                <div class="product-content">
+                    <div class="product-title">刻纸</div>
+                    <div class="product-desc">传统剪纸与刻刀结合，培养耐心与空间想象力。</div>
+                    <div class="activities">
+                        <h4>📌 三项主题活动</h4>
+                        <div class="activity-item"><span class="activity-icon">🔪</span><span class="activity-text">活动1：生肖刻纸初体验 — 基础纹样练习</span></div>
+                        <div class="activity-item"><span class="activity-icon">🖼️</span><span class="activity-text">活动2：四季窗花设计 — 对称构图创作</span></div>
+                        <div class="activity-item"><span class="activity-icon">🏮</span><span class="activity-text">活动3：刻纸灯笼DIY — 装点节日氛围</span></div>
+                    </div>
+                    <button class="btn-sm" data-type="course" data-name="刻纸入门教程">📺 观看教学视频</button>
+                </div>
+            </div>
+            <!-- 产品2: 扎染 -->
+            <div class="product-card">
+                <div class="product-img" style="background-image: linear-gradient(120deg, #59bcd5, #accfcf), url('zharan.jpg'); background-blend-mode: overlay;">
+                    <span class="product-tag">💙 蓝染技艺</span>
+                </div>
+                <div class="product-content">
+                    <div class="product-title">扎染</div>
+                    <div class="product-desc">线绳扎结，浸染出独一无二的冰裂纹图案。</div>
+                    <div class="activities">
+                        <h4>📌 三项主题活动</h4>
+                        <div class="activity-item"><span class="activity-icon">🧵</span><span class="activity-text">活动1：橡皮筋扎染方巾 — 基础捆扎技法</span></div>
+                        <div class="activity-item"><span class="activity-icon">🌀</span><span class="activity-text">活动2：螺旋纹样创作 — 色彩渐变实验</span></div>
+                        <div class="activity-item"><span class="activity-icon">🛍️</span><span class="activity-text">活动3：扎染环保袋 — 实用艺术制作</span></div>
+                    </div>
+                    <button class="btn-sm" data-type="course" data-name="扎染基础课程">📺 观看教学视频</button>
+                </div>
+            </div>
+            <!-- 产品3: 非遗香珠 -->
+            <div class="product-card">
+                <div class="product-img" style="background-image: linear-gradient(120deg, #f0d09b, #efccb6), url('xiangzhu.jpg'); background-blend-mode: overlay;">
+                    <span class="product-tag">🌸 合香古法</span>
+                </div>
+                <div class="product-content">
+                    <div class="product-title">非遗香珠</div>
+                    <div class="product-desc">天然香粉揉制，制成佩饰香珠，传承中医香疗文化。</div>
+                    <div class="activities">
+                        <h4>📌 三项主题活动</h4>
+                        <div class="activity-item"><span class="activity-icon">🌿</span><span class="activity-text">活动1：识香料·制香泥 — 认识檀香/丁香</span></div>
+                        <div class="activity-item"><span class="activity-icon">📿</span><span class="activity-text">活动2：手搓香珠串 — 揉捏与晾晒技巧</span></div>
+                        <div class="activity-item"><span class="activity-icon">🎁</span><span class="activity-text">活动3：香珠挂饰设计 — 搭配流苏配饰</span></div>
+                    </div>
+                    <button class="btn-sm" data-type="course" data-name="非遗香珠手作课">📺 观看教学视频</button>
+                </div>
+            </div>
+            <!-- 产品4: 皮影 -->
+            <div class="product-card">
+                <div class="product-img" style="background-image: linear-gradient(120deg, #c49f84, #e4caae), url('piying.jpg'); background-blend-mode: overlay;">
+                    <span class="product-tag">🎭 光影戏剧</span>
+                </div>
+                <div class="product-content">
+                    <div class="product-title">皮影</div>
+                    <div class="product-desc">牛皮雕刻，灯光映衬，演绎传统故事。</div>
+                    <div class="activities">
+                        <h4>📌 三项主题活动</h4>
+                        <div class="activity-item"><span class="activity-icon">✂️</span><span class="activity-text">活动1：皮影人物绘制 — 角色造型设计</span></div>
+                        <div class="activity-item"><span class="activity-icon">🎨</span><span class="activity-text">活动2：皮影组装与操竿 — 关节连接技巧</span></div>
+                        <div class="activity-item"><span class="activity-icon">🎭</span><span class="activity-text">活动3：光影小剧场 — 自编皮影戏表演</span></div>
+                    </div>
+                    <button class="btn-sm" data-type="course" data-name="皮影戏入门">📺 观看教学视频</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 功能模块区 (产品B的四大功能) -->
+        <div class="section-title">📖 平台学习工具箱</div>
+        <div class="features">
+            <div class="feature-card" id="featureVideo">
+                <div class="feature-icon">🎥</div>
+                <h3>教学视频</h3>
+                <p>扫码观看步骤化教学视频，简单易懂，分段学习非遗技法。</p>
+                <button class="feature-btn" data-modal="videoModal">查看示例视频</button>
+            </div>
+            <div class="feature-card" id="featureResource">
+                <div class="feature-icon">📚</div>
+                <h3>教案资源</h3>
+                <p>标准化教案、活动流程、课件下载，支持教师备课。</p>
+                <button class="feature-btn" data-modal="resourceModal">下载教案示例</button>
+            </div>
+            <div class="feature-card" id="featureAlbum">
+                <div class="feature-icon">☁️🖼️</div>
+                <h3>云端相册</h3>
+                <p>幼儿作品上传，记录成长轨迹，班级共享展示。</p>
+                <button class="feature-btn" data-modal="albumModal">浏览作品墙</button>
+            </div>
+            <div class="feature-card" id="featureAr">
+                <div class="feature-icon">🪄📱</div>
+                <h3>轻量化AR</h3>
+                <p>第三方工具实现卡片扫描，3D模型/动画增强交互。</p>
+                <button class="feature-btn" data-modal="arModal">AR体验入口</button>
+            </div>
+        </div>
+
+        <!-- 云端相册 模拟展示 -->
+        <div class="gallery-preview" id="albumPreview">
+            <h3>✨ 最新幼儿作品展示（云端相册）</h3>
+            <div class="gallery-grid">
+                <img src="xiangzhu.jpg" alt="作品1">
+                <img src="https://picsum.photos/id/29/100/100" alt="作品2">
+                <img src="piying.jpg" alt="作品3">
+                <img src="https://picsum.photos/id/96/100/100" alt="作品4">
+            </div>
+            <p style="margin-top: 12px; font-size: 0.8rem;">📸 点击“云端相册”按钮可上传/点赞（模拟演示）</p>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2025 艺启云非遗美育平台 | 让传统技艺走进课堂 | 扫码分享学习资源</p>
+    <p>📱 兼容手机/平板/电脑 | 教学支持：刻纸·扎染·香珠·皮影</p>
+</footer>
+
+<!-- 模态框集合 -->
+<div id="videoModal" class="modal">
+    <div class="modal-content">
+        <h3>🎬 教学视频示例</h3>
+        <div style="margin: 16px 0;">
+            <p>刻纸</p>
+            <video controls style="width:100%; border-radius: 24px;" poster="kezhi.mp4">
+                <source src="kezhi.mp4" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+            <p>扎染</p>
+            <video controls style="width:100%; border-radius: 24px;" poster="zharan.mp4">
+                <source src="zharan.mp4" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+            <p>香珠</p>
+            <video controls style="width:100%; border-radius: 24px;" poster="xiangzhu.mp4">
+                <source src="xiangzhu.mp4" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+            <p>皮影</p>
+            <video controls style="width:100%; border-radius: 24px;" poster="piying.mp4">
+                <source src="piying.mp4" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+        </div>
+        <p>课程展示片段 | 更多视频请关注课程专区</p>
+        <button class="close-modal">关闭</button>
+    </div>
+</div>
+
+<!-- 教案资源模态框 — 已增加完整PDF文件下载链接 (保留原有内容 + 新增每个教案的PDF下载) -->
+<div id="resourceModal" class="modal">
+    <div class="modal-content">
+        <h3>📄 非遗教案资源库 · 含PDF文件下载</h3>
+        <div class="pdf-note">
+            💡 提示：下方每个教案均配有PDF文件链接，请将您的PDF文件放置于 <strong>/pdf/</strong> 目录下（或修改链接路径），即可点击下载使用。
+        </div>
+        
+        <!-- 刻纸教案组 -->
+        <div style="text-align: left; margin: 12px 0 8px 0;"><strong>✂️ 刻纸 · 非遗课程教案</strong></div>
+        <ul style="text-align: left; margin-bottom: 20px; list-style: none; padding-left: 0;">
+            <li class="resource-list-item">
+                <span class="resource-text">📘 《大班美术活动：有趣的非遗刻纸》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1rN4jpOTk5PAb0k70E45nYw?pwd=9Eil" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📗 《大班美术活动：神奇的刻纸》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1LZKDtFG9DubtCwkEzVueKA?pwd=oFzd" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📙 《小班美术活动：神奇的刻纸》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/18GHDZ10uEVZx6hG12KzzCQ?pwd=v6p2" download target="_blank">📥 下载PDF</a>
+            </li>
+        </ul>
+
+        <!-- 香珠教案组 -->
+        <div style="text-align: left; margin: 12px 0 8px 0;"><strong>🌸 非遗香珠 · 合香教案</strong></div>
+        <ul style="text-align: left; margin-bottom: 20px; list-style: none; padding-left: 0;">
+            <li class="resource-list-item">
+                <span class="resource-text">📘 《大班美术活动：趣味香串珠》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1I-B8rL5tyUgxhpJJdGKvPA?pwd=cHVZ" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📗 《中班美术活动：与你“香”遇》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1Y5x0OmAYNfMRP7GbX_qP1A?pwd=8dtP" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📙 《小班美术活动：香香小串珠》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1e3KX_20BdjbzVlq1oo1f6A?pwd=7Cb6" download target="_blank">📥 下载PDF</a>
+            </li>
+        </ul>
+
+        <!-- 扎染教案组 -->
+        <div style="text-align: left; margin: 12px 0 8px 0;"><strong>💙 扎染 · 蓝染技艺教案</strong></div>
+        <ul style="text-align: left; margin-bottom: 20px; list-style: none; padding-left: 0;">
+            <li class="resource-list-item">
+                <span class="resource-text">📘 《大班美术活动：扎染星盒——探秘红山纹样》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1ScChaRBIWCxzFYm-Ci0eiA?pwd=7tqd" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📗 《中班美术活动：扎染星盒——红山文化的彩色密码》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1TPXeJvhBxaM26GCDs5_Adg?pwd=5no9" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📙 《小班美术活动：扎染星盒——我的红山宝贝》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1B6nTyXW243yx_bzq3f_fBA?pwd=i7z4" download target="_blank">📥 下载PDF</a>
+            </li>
+        </ul>
+
+        <!-- 皮影教案组 -->
+        <div style="text-align: left; margin: 12px 0 8px 0;"><strong>🎭 凌源皮影 · 光影戏剧教案</strong></div>
+        <ul style="text-align: left; margin-bottom: 20px; list-style: none; padding-left: 0;">
+            <li class="resource-list-item">
+                <span class="resource-text">📘 《大班美术活动：光影里的家乡瑰宝——凌源皮影》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1RQDeIWTPcnLzCZj0gJD29g?pwd=1u4a" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📗 《中班美术活动：皮影星盒——凌源皮影小神兽》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1dbTi2UDe_qKbcEPvgxiMLA?pwd=p404" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📙 《中班美术活动：皮影星盒——会动的小神兽》教案（含活动流程）</span>
+                <a class="pdf-download-link" href="https://pan.baidu.com/s/1Thp0al-IWd-NzDzdTxeCqw?pwd=1w6t" download target="_blank">📥 下载PDF</a>
+            </li>
+            <li class="resource-list-item">
+                <span class="resource-text">📕 《皮影小剧场》角色卡模板</span>
+                <a class="pdf-download-link" href="/pdf/piying_jiaose_moban.pdf" download target="_blank">📥 下载PDF</a>
+            </li>
+        </ul>
+        
+        <hr />
+        <p>💡 点击下方按钮可批量获取全部教案预览（模拟打包下载）</p>
+        <button id="simulateDownloadBtn" style="background:#d48c3c; border:none; padding:8px 20px; border-radius:40px; color:white; cursor:pointer;">📦 下载教案合集 (模拟)</button>
+        <button class="close-modal" style="margin-top:16px;">关闭</button>
+    </div>
+</div>
+
+<div id="albumModal" class="modal">
+    <div class="modal-content">
+        <h3>☁️ 云端相册 · 成长轨迹</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 20px 0;">
+            <img src="https://picsum.photos/id/42/80/80" style="border-radius: 20px;">
+            <img src="https://picsum.photos/id/58/80/80" style="border-radius: 20px;">
+            <img src="https://picsum.photos/id/91/80/80" style="border-radius: 20px;">
+            <img src="https://picsum.photos/id/159/80/80" style="border-radius: 20px;">
+        </div>
+        <p>✨ 上传你的非遗作品，记录美好瞬间（模拟交互）</p>
+        <button id="uploadDemoBtn" style="background:#f0e2d4; border:none; padding:6px 16px; border-radius:40px;">📤 模拟上传</button>
+        <button class="close-modal" style="margin-top:16px;">关闭</button>
+    </div>
+</div>
+
+<div id="arModal" class="modal">
+    <div class="modal-content">
+        <h3>🪄 轻量化AR体验</h3>
+        <p>借助第三方工具 (如EasyAR) 扫描下方教具卡片，即可呈现3D皮影/刻纸模型动态效果</p>
+        <div style="background:#f1e7df; padding:20px; border-radius: 32px; margin: 16px 0;">
+            <div style="background: white; width: 120px; height: 120px; margin: 0 auto; border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 2px dashed #d48c3c;">
+                🃏 模拟识别图
+            </div>
+            <p style="margin-top: 12px;">🎯 扫描“非遗卡片” → 展示刻纸分解动画 / 皮影戏偶</p>
+        </div>
+        <button id="simulateArScanBtn" style="background:#6b4e34; color:white;">🔍 模拟AR扫描 (演示效果)</button>
+        <button class="close-modal" style="margin-top:16px;">关闭</button>
+    </div>
+</div>
+
+<script>
+    // 页面导航模拟 + 功能演示 (所有点击交互不依赖后端)
+    (function() {
+        // 模态框管理
+        const modals = {
+            videoModal: document.getElementById('videoModal'),
+            resourceModal: document.getElementById('resourceModal'),
+            albumModal: document.getElementById('albumModal'),
+            arModal: document.getElementById('arModal')
+        };
+        function openModal(id) {
+            if(modals[id]) modals[id].style.display = 'flex';
+        }
+        function closeAllModals() {
+            Object.values(modals).forEach(m => { if(m) m.style.display = 'none'; });
+        }
+        // 绑定所有打开模态框的按钮
+        document.querySelectorAll('[data-modal]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const modalId = btn.getAttribute('data-modal');
+                if(modalId && modals[modalId]) openModal(modalId);
+            });
+        });
+        // 关闭按钮
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', closeAllModals);
+        });
+        // 点击模态背景关闭
+        window.addEventListener('click', (e) => {
+            if(e.target.classList && e.target.classList.contains('modal')) closeAllModals();
+        });
+
+        // 产品卡片内 观看教学视频 按钮: 弹出视频模态框 (完全保留原有功能)
+        document.querySelectorAll('.btn-sm[data-type="course"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const courseName = btn.getAttribute('data-name') || '非遗课程';
+                const videoModal = modals.videoModal;
+                const titleElem = videoModal.querySelector('h3');
+                if(titleElem) titleElem.innerHTML = `🎬 ${courseName} · 教学视频`;
+                openModal('videoModal');
+            });
+        });
+
+        // 模拟下载教案合集 (保留原有模拟)
+        const simulateDownload = document.getElementById('simulateDownloadBtn');
+        if(simulateDownload) {
+            simulateDownload.addEventListener('click', () => {
+                alert('模拟下载：艺启云教案资源包（含刻纸/扎染/香珠/皮影全套活动流程及PDF文档）\n实际项目可打包真实教案文件。');
+            });
+        }
+
+        // 模拟上传作品
+        const uploadDemo = document.getElementById('uploadDemoBtn');
+        if(uploadDemo) {
+            uploadDemo.addEventListener('click', () => {
+                alert('云端相册演示：已上传幼儿作品《彩染手帕》！(实际项目可对接云存储)');
+            });
+        }
+
+        // 模拟AR扫描演示
+        const arScanBtn = document.getElementById('simulateArScanBtn');
+        if(arScanBtn) {
+            arScanBtn.addEventListener('click', () => {
+                alert('🎉 AR效果模拟：扫描“刻纸”卡片，展示3D镂空结构动画！\n（真实环境可使用xr-frame或EasyAR实现）');
+            });
+        }
+
+        // 导航栏切换高亮 + 简单滚动定位 (非完整路由，仅UI)
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = {
+            home: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+            video: () => { document.getElementById('featureVideo')?.scrollIntoView({ behavior: 'smooth' }); openModal('videoModal'); },
+            resource: () => { document.getElementById('featureResource')?.scrollIntoView({ behavior: 'smooth' }); openModal('resourceModal'); },
+            album: () => { document.getElementById('albumPreview')?.scrollIntoView({ behavior: 'smooth' }); openModal('albumModal'); },
+            ar: () => { document.getElementById('featureAr')?.scrollIntoView({ behavior: 'smooth' }); openModal('arModal'); }
+        };
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const navValue = link.getAttribute('data-nav');
+                if(navValue && sections[navValue]) sections[navValue]();
+                // 更新激活样式
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // 为所有新增的PDF链接添加友好提醒（可选，但保留下载功能）
+        document.querySelectorAll('.pdf-download-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 不做拦截，仅当文件不存在时让浏览器自然处理，用户可替换真实路径。
+                console.log('尝试下载PDF：', this.href);
+            });
+        });
+
+        console.log('艺启云学习平台已启动 — 四大非遗产品及三项活动展示 | 教案资源已集成PDF文件下载链接');
+    })();
+</script>
+</body>
+</html>
